@@ -1,0 +1,39 @@
+project:
+  type: manuscript
+  #output-dir: docs
+
+execute:
+  freeze: auto
+  echo: false
+  #cold-fold: true
+
+number-sections: true
+toc: true
+toc-title: 目录
+
+format:
+  html:
+    #incremental: true
+    notebook-links: true
+    html-math-method: katex
+    #toc-location: left
+    other-links:
+      - text: NASA Open Data
+        href: https://data.nasa.gov/
+    code-links:
+      - text: Data Import Code
+        icon: file-code
+        href: /Users/chenn/Documents/Code/python_learn/data_analysis/ch9.ipynb
+  docx:
+    reference-doc: custom-reference-doc.docx
+    #incremental: true
+    notebook-links: false
+  #pdf:
+    #documentclass: article
+    #header-includes: |
+      #\usepackage{url} %this package should fix any errors with URLs in refs.
+      #\usepackage{lineno}
+      #\usepackage{soul}
+      #\linenumbers
+    #incremental: true
+    #notebook-links: false
