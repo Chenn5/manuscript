@@ -84,12 +84,12 @@ where $\lambda$ is the rate of eruptions per year. Using @eq-poisson, the probab
 
 @tbl-history summarises the eruptions recorded since the colonization of the islands by Europeans in the late 1400s.
 
-
-
-
 {{< embed notebooks/data-screening.qmd#fig-spatial-plot >}}
-
 @fig-spatial-plot shows the location of recent Earthquakes on La Palma.
+
+![notion图床成功](https://file.notion.so/f/f/d63aa876-b695-47a2-ad36-542ae3030618/6915e2b9-9522-455f-bee0-a61dfa290f97/stn-1m2WhXllr8BvEtq3kktRSIhjXgqWi7EJAF4p56sP.png?table=block&id=f6b5aaf7-094f-4b60-917e-b4c95276cb80&spaceId=d63aa876-b695-47a2-ad36-542ae3030618&expirationTimestamp=1727697600000&signature=eUBO8_AlcmBDxbgEStpIBx1WknVh6yZ9Cpwu-hBZLco&downloadName=stn-1m2WhXllr8BvEtq3kktRSIhjXgqWi7EJAF4p56sP.png){#fig-map}
+
+@fig-map 用notion作为图床成功了
 
 ## Methods
 
