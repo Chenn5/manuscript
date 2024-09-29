@@ -13,6 +13,7 @@ toc-title: 目录
 
 format:
   html:
+    css: styles.css
     #incremental: true
     notebook-links: true
     html-math-method: katex
