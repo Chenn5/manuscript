@@ -84,7 +84,8 @@ where $\lambda$ is the rate of eruptions per year. Using @eq-poisson, the probab
 
 @tbl-history summarises the eruptions recorded since the colonization of the islands by Europeans in the late 1400s.
 
-![法国萨克雷大学](https://file.notion.so/f/f/d63aa876-b695-47a2-ad36-542ae3030618/e036e444-6384-4e75-8663-d9cb9caaec93/IMG_4582.jpeg?table=block&id=fabc6b94-997f-495c-88c3-5dd769999531&spaceId=d63aa876-b695-47a2-ad36-542ae3030618&expirationTimestamp=1727654400000&signature=HSf0PsxCbPHFGQcma_pcIvo08Cck19CM4_rTPBuYTKs&downloadName=IMG_4582.jpeg){#fig-map}La Palma is one of the west most islands in the Volcanic Archipelago of the Canary Islands (@fig-map).
+
+
 
 {{< embed notebooks/data-screening.qmd#fig-spatial-plot >}}
 
