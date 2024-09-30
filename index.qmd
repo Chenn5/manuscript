@@ -41,6 +41,11 @@ In September 2021, a significant jump in seismic activity on the island of La Pa
 import matplotlib.pyplot as plt
 import numpy as np
 import matplotlib as mpl
+from PIL import Image
+import requests
+from io import BytesIO
+import string
+
 config = {
     'font.family': 'serif',
     'font.serif': 'Times New Roman',
@@ -53,35 +58,69 @@ mpl.rcParams.update(config)
 
 ```{python}
 #| label: fig-s 
-#| fig-cap: 图片排列组合
+#| fig-cap: 链接图片排列组合
 #| fig-alt: 图片排列组合
 
-# 创建画布，实例化一个fig
-fig = plt.figure(figsize=(12, 9.6), dpi=300)
+import matplotlib.pyplot as plt
+from PIL import Image
+import requests
+from io import BytesIO
+import numpy as np
+import string
 
-# 创建坐标系
-ax1 = fig.add_subplot(2, 2, 1) 
-ax2 = fig.add_subplot(2, 2, 2)
-ax3 = fig.add_subplot(2, 2, 3)
-ax4 = fig.add_subplot(2, 2, 4)
+def load_image(image_path, is_url):
+    if is_url:
+        response = requests.get(image_path)
+        img = Image.open(BytesIO(response.content))
+    else:
+        img = Image.open(image_path)
+    return np.array(img)
 
-# 在每个子图的左上角添加标号
-ax1.text(0.02, 0.98, '(a)', transform=ax1.transAxes, fontsize=16, fontweight='bold', va='top', ha='left')
-ax2.text(0.02, 0.98, '(b)', transform=ax2.transAxes, fontsize=16, fontweight='bold', va='top', ha='left')
-ax3.text(0.02, 0.98, '(c)', transform=ax3.transAxes, fontsize=16, fontweight='bold', va='top', ha='left')
-ax4.text(0.02, 0.98, '(d)', transform=ax4.transAxes, fontsize=16, fontweight='bold', va='top', ha='left')
+def display_mixed_images(image_info, rows=1, cols=1, figsize=(12, 8), aspect=1):
+    fig, axes = plt.subplots(rows, cols, figsize=figsize, dpi=300)
+    axes = axes.flatten() if isinstance(axes, np.ndarray) else [axes]
+    
+    for idx, (ax, (image_path, is_url)) in enumerate(zip(axes, image_info)):
+        img_array = load_image(image_path, is_url)
+        
+        # 在子图中显示图片
+        im = ax.imshow(img_array, aspect=aspect)
+        ax.axis('off')  # 不显示坐标轴
+        
+        # 添加子图标号
+        label = f'({string.ascii_lowercase[idx]})'
+        ax.text(0.05, 0.95, label, transform=ax.transAxes, 
+                fontsize=12, fontweight='bold', color='black', va='top', ha='left')
+        
+        # 设置子图标题
+        #source_type = "URL" if is_url else "Local"
+        #ax.set_title(f"{source_type}: {image_path.split('/')[-1]}", fontsize=10)
+    
+    # 调整布局，确保所有子图大小一致
+    plt.tight_layout()
+    
+    # 调整子图，使其填满分配的空间并保持指定的 aspect ratio
+    for ax in axes:
+        ax.set_aspect(aspect)
+    
+    plt.show()
 
-# 绘制图形
-ax3.plot(np.random.randn(50).cumsum(), '-.')
-ax3.plot(np.random.randn(50).cumsum(), '-', color='fuchsia')
-ax1.hist(np.random.randn(100), bins=20, color='C9', alpha=0.3)
-ax2.scatter(np.arange(30), np.arange(30) + 3 * np.random.randn(30))
-ax4.plot(np.random.randn(50).cumsum(), 'k--')
+# 示例使用
+image_info = [
+    ('/Users/chenn/Documents/Code/manuscript/_manuscript/index_files/figure-html/cell-5-output-1.png', False),
+    ('https://file.notion.so/f/f/d63aa876-b695-47a2-ad36-542ae3030618/d1ecc0fd-e6ea-4c81-9065-d1676a08a550/29d7a2a855e6c00ec00cf029ac5b9b13.jpeg?table=block&id=0fcb8964-7ee5-4340-b74b-c0646502f260&spaceId=d63aa876-b695-47a2-ad36-542ae3030618&expirationTimestamp=1727740800000&signature=Yyo91dULeS4zlxtHCosnJDlCgoZt6fgCHuMMDIqmS8o&downloadName=29d7a2a855e6c00ec00cf029ac5b9b13.jpeg', True),
+    ('/Users/chenn/Documents/Code/manuscript/_manuscript/index_files/figure-html/fig-spatial-plot-output-1.png', False),
+    ('https://file.notion.so/f/f/d63aa876-b695-47a2-ad36-542ae3030618/f9dd66c1-e458-4072-a6b9-f10b6ae7a363/IMG_4578.jpeg?table=block&id=046f0019-2482-4fcb-a7c8-7589e0324f1a&spaceId=d63aa876-b695-47a2-ad36-542ae3030618&expirationTimestamp=1727740800000&signature=C2YkPGR67Z4sVw7gSt7vV9YYWzfkayTpV0eByMukIxg&downloadName=IMG_4578.jpeg', True)
+]
 
-plt.show()
+# 使用 aspect=1 来创建正方形子图
+display_mixed_images(image_info, rows=2, cols=2, figsize=(10, 10), aspect="auto")
+
+# 使用 aspect=0.75 来创建稍微矩形的子图（高度是宽度的 3/4）
+# display_mixed_images(image_info, rows=2, cols=2, figsize=(12, 9), aspect=0.75)
 ```
 
-Based on data up to and including 1971, eruptions on La Palma happen every 79.8 years on average. Studies of the magma systems feeding the volcano, such as, have proposed that there are two main magma reservoirs feeding the Cumbre Vieja volcano; one in the mantle (30-40km depth) which charges and in turn feeds a shallower crustal reservoir (10-20km depth). Eight eruptions have been recorded since the late 1400s (@fig-s). Data and methods are discussed in @sec-data-methods. Let $x$ denote the number of eruptions in a year. Then, $x$ can be modeled by a Poisson distribution
+ (@fig-s). Data and methods are discussed in @sec-data-methods. Let $x$ denote the number of eruptions in a year. Then, $x$ can be modeled by a Poisson distribution
 
 $$
 p(x) = \frac{e^{-\lambda} \lambda^{x}}{x !}
